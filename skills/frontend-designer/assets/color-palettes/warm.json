@@ -1,0 +1,29 @@
+{
+  "name": "Warm",
+  "description": "暖色调配色方案，适合电商和社交应用",
+  "colors": {
+    "primary": {
+      "50": "#fff7ed",
+      "100": "#ffedd5",
+      "200": "#fed7aa",
+      "300": "#fdba74",
+      "400": "#fb923c",
+      "500": "#f97316",
+      "600": "#ea580c",
+      "700": "#c2410c",
+      "800": "#9a3412",
+      "900": "#7c2d12"
+    },
+    "accent": {
+      "rose": "#f43f5e",
+      "pink": "#ec4899",
+      "amber": "#f59e0b"
+    },
+    "semantic": {
+      "success": "#10b981",
+      "warning": "#f59e0b",
+      "error": "#ef4444",
+      "info": "#3b82f6"
+    }
+  }
+}

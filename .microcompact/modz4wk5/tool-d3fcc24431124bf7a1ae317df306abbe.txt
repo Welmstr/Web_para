@@ -1,0 +1,53 @@
+   1→import React from 'react';
+   2→import { Trophy, Users, Award } from 'lucide-react';
+   3→
+   4→const events = [
+   5→  { year: '2019', title: '团队成立', desc: '超算与并行计算团队正式成立', icon: Users, milestone: false },
+   6→  { year: '2019', title: 'CPC金奖', desc: '第四届"神威杯"国产CPU并行应用挑战赛金奖', icon: Trophy, milestone: true },
+   7→  { year: '2021-2025', title: '持续突破', desc: 'ASC世界大学生超级计算机竞赛一等奖1项、二等奖8项', icon: Award, milestone: false },
+   8→  { year: '2024', title: 'ASC国际一等奖', desc: 'ASC世界大学生超级计算机竞赛国际一等奖、最佳团队奖', icon: Trophy, milestone: true },
+   9→  { year: '2024', title: 'PAC全国一等奖', desc: 'PAC并行应用挑战赛全国一等奖', icon: Award, milestone: true },
+  10→  { year: '2024', title: '飞翔奖最佳团队', desc: '第九届飞翔奖"最佳团队奖"', icon: Trophy, milestone: true },
+  11→];
+  12→
+  13→export default function History() {
+  14→  return (
+  15→    <div className="min-h-screen bg-white">
+  16→      <div className="max-w-4xl mx-auto px-6 py-20">
+  17→        <div className="text-center mb-20">
+  18→          <h1 className="section-title">成长历程</h1>
+  19→          <p className="section-subtitle mx-auto">从3人拓荒小队到45人大家庭的奋斗之路</p>
+  20→        </div>
+  21→
+  22→        <div className="relative">
+  23→          <div className="absolute left-1/2 top-0 bottom-0 w-px timeline-line transform -translate-x-1/2" />
+  24→          
+  25→          {events.map((event, idx) => (
+  26→            <div key={idx} className={`relative flex items-center mb-16 ${idx % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+  27→              <div className={`w-1/2 ${idx % 2 === 0 ? 'pr-12 text-right' : 'pl-12 text-left'}`}>
+  28→                <div className="bg-white border border-slate-200 rounded-xl p-6 card-shadow card-shadow-hover transition-all">
+  29→                  <div className="flex items-center gap-2 mb-2 justify-start">
+  30→                    <event.icon className="w-4 h-4 text-blue-900" />
+  31→                    <span className="text-sm font-medium text-blue-900">{event.year}</span>
+  32→                    {event.milestone && (
+  33→                      <span className="px-2 py-0.5 text-xs font-medium award-badge text-amber-800 rounded">里程碑</span>
+  34→                    )}
+  35→                  </div>
+  36→                  <h3 className="text-lg font-semibold text-slate-900 mb-1">{event.title}</h3>
+  37→                  <p className="text-sm text-slate-600">{event.desc}</p>
+  38→                </div>
+  39→              </div>
+  40→              <div className="absolute left-1/2 w-3 h-3 bg-blue-900 rounded-full transform -translate-x-1/2 border-2 border-white" />
+  41→            </div>
+  42→          ))}
+  43→        </div>
+  44→
+  45→        <div className="text-center mt-20">
+  46→          <div className="inline-flex items-center gap-2 px-6 py-3 bg-slate-100 rounded-full">
+  47→            <span className="text-slate-700 font-medium">累计获奖60余次，持续前行中</span>
+  48→          </div>
+  49→        </div>
+  50→      </div>
+  51→    </div>
+  52→  );
+  53→}

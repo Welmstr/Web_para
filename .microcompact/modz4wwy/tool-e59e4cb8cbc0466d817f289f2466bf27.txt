@@ -1,0 +1,13 @@
+The file /home/project/src/pages/Home.tsx has been updated. Made 1 replacement.
+
+Here's the result of running `cat -n` on a snippet of the edited file:
+  91→        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+  92→          <h2 className="section-title text-center mb-16">快速导航</h2>
+  93→          <div className="grid md:grid-cols-3 gap-8">
+  94→            {[
+  95→              { title: '团队历程', desc: '从3人到45人的奋斗之路', href: '#/team-history', bg: 'bg-blue-50 hover:bg-blue-100' },
+  96→              { title: '研究方向', desc: '高性能计算与AI基础设施', href: '#/research', bg: 'bg-purple-50 hover:bg-purple-100' },
+  97→              { title: '加入我们', desc: '期待你的加入共创未来', href: '#/contact', bg: 'bg-amber-50 hover:bg-amber-100' },
+  98→            ].map((item) => (
+  99→              <a key={item.title} href={item.href} className={`p-6 rounded-xl ${item.bg} transition-colors`}>
+ 100→                <h3 className="text-xl font-semibold text-slate-900">{item.title}</h3>

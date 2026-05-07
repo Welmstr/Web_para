@@ -1,0 +1,32 @@
+The file /home/project/src/App.tsx has been updated. Made 1 replacement.
+
+Here's the result of running `cat -n` on a snippet of the edited file:
+   1→import React from 'react';
+   2→import { HashRouter, Routes, Route } from 'react-router-dom';
+   3→import Layout from './components/Layout';
+   4→import Home from './pages/Home';
+   5→import About from './pages/About';
+   6→import TeamHistory from './pages/TeamHistory';
+   7→import Research from './pages/Research';
+   8→import Recruitment from './pages/Recruitment';
+   9→import Contact from './pages/Contact';
+  10→
+  11→function App() {
+  12→  return (
+  13→    <HashRouter>
+  14→      <Routes>
+  15→        <Route path="/" element={<Layout />}>
+  16→          <Route index element={<Home />} />
+  17→          <Route path="about" element={<About />} />
+  18→          <Route path="team-history" element={<TeamHistory />} />
+  19→          <Route path="research" element={<Research />} />
+  20→          <Route path="recruitment" element={<Recruitment />} />
+  21→          <Route path="contact" element={<Contact />} />
+  22→        </Route>
+  23→      </Routes>
+  24→    </HashRouter>
+  25→  );
+  26→}
+  27→
+  28→export default App;
+  29→

@@ -1,0 +1,19 @@
+The file /home/project/src/components/Navbar.tsx has been updated. Made 1 replacement.
+
+Here's the result of running `cat -n` on a snippet of the edited file:
+   1→import React, { useState, useEffect } from 'react';
+   2→import { Link, useLocation } from 'react-router-dom';
+   3→import { Menu, X } from 'lucide-react';
+   4→
+   5→const navItems = [
+   6→  { label: '首页', path: '/' },
+   7→  { label: '团队概况', path: '/about' },
+   8→  { label: '团队历程', path: '/team-history' },
+   9→  { label: '研究方向', path: '/research' },
+  10→  { label: '联系我们', path: '/contact' },
+  11→];
+  12→
+  13→export default function Navbar() {
+  14→  const [isScrolled, setIsScrolled] = useState(false);
+  15→  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  16→  const location = useLocation();

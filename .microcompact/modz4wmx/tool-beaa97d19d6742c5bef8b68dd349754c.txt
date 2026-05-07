@@ -1,0 +1,137 @@
+   1→import React, { useState, useRef, useEffect } from 'react';
+   2→import { Trophy, Medal, Award, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+   3→
+   4→const stats = [
+   5→  { label: '累计获奖', value: '60+', icon: Trophy, desc: '国内外顶级赛事获奖' },
+   6→  { label: '国际赛事', value: '10+', icon: Medal, desc: '参与国际级比赛' },
+   7→  { label: '最佳团队奖', value: '2项', icon: Award, desc: '团队最高荣誉' },
+   8→];
+   9→
+  10→const awardsData = [
+  11→  { id: 'asc', name: 'ASC世界大学生超级计算机竞赛', icon: Trophy, awards: ['国际一等奖 1项', '国际二等奖 8项', '超级团队奖 1项'] },
+  12→  { id: 'cpc', name: 'CPC国产CPU并行应用挑战赛', icon: Medal, awards: ['金奖 1项', '二等奖 3项', '三等奖 2项'] },
+  13→  { id: 'ipcc', name: 'IPCC ACM国际并行计算挑战赛', icon: Award, awards: ['优胜奖 3项', '教育基金奖 3项'] },
+  14→  { id: 'pac', name: 'PAC并行应用挑战赛', icon: Star, awards: ['全国一等奖 1项', '二等奖 2项'] },
+  15→];
+  16→
+  17→export default function Achievements() {
+  18→  const [currentIndex, setCurrentIndex] = useState(0);
+  19→  const containerRef = useRef<HTMLDivElement>(null);
+  20→
+  21→  const goToPrev = () => {
+  22→    setCurrentIndex((prev) => (prev === 0 ? stats.length - 1 : prev - 1));
+  23→  };
+  24→
+  25→  const goToNext = () => {
+  26→    setCurrentIndex((prev) => (prev === stats.length - 1 ? 0 : prev + 1));
+  27→  };
+  28→
+  29→  return (
+  30→    <div className="min-h-screen bg-slate-50">
+  31→      <div className="bg-white border-b border-slate-100">
+  32→        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
+  33→          <h1 className="section-title">竞赛成果</h1>
+  34→          <p className="section-subtitle">团队在国内外顶级超算赛事中屡创佳绩，累计获奖60余次</p>
+  35→        </div>
+  36→      </div>
+  37→
+  38→      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+  39→        <div className="relative mb-16">
+  40→          <div className="overflow-hidden">
+  41→            <div
+  42→              ref={containerRef}
+  43→              className="flex transition-transform duration-500 ease-out"
+  44→              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+  45→            >
+  46→              {stats.map((stat, index) => (
+  47→                <div key={stat.label} className="w-full flex-shrink-0 px-4">
+  48→                  <div className="bg-white rounded-2xl p-10 card-shadow text-center max-w-md mx-auto">
+  49→                    <div className="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+  50→                      <stat.icon className="w-10 h-10 text-blue-900" />
+  51→                    </div>
+  52→                    <div className="text-5xl font-bold text-blue-900 mb-3">{stat.value}</div>
+  53→                    <div className="text-xl font-semibold text-slate-900 mb-2">{stat.label}</div>
+  54→                    <div className="text-slate-500">{stat.desc}</div>
+  55→                  </div>
+  56→                </div>
+  57→              ))}
+  58→            </div>
+  59→          </div>
+  60→
+  61→          <button
+  62→            onClick={goToPrev}
+  63→            className="absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-600 hover:text-blue-900 hover:shadow-xl transition-all z-10"
+  64→          >
+  65→            <ChevronLeft className="w-6 h-6" />
+  66→          </button>
+  67→          <button
+  68→            onClick={goToNext}
+  69→            className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-600 hover:text-blue-900 hover:shadow-xl transition-all z-10"
+  70→          >
+  71→            <ChevronRight className="w-6 h-6" />
+  72→          </button>
+  73→
+  74→          <div className="flex justify-center gap-2 mt-8">
+  75→            {stats.map((_, index) => (
+  76→              <button
+  77→                key={index}
+  78→                onClick={() => setCurrentIndex(index)}
+  79→                className={`w-3 h-3 rounded-full transition-all ${
+  80→                  index === currentIndex ? 'bg-blue-900 w-8' : 'bg-slate-300 hover:bg-slate-400'
+  81→                }`}
+  82→              />
+  83→            ))}
+  84→          </div>
+  85→        </div>
+  86→
+  87→        <div className="grid md:grid-cols-2 gap-6">
+  88→          {awardsData.map((item) => (
+  89→            <div key={item.id} className="bg-white rounded-xl p-8 card-shadow card-shadow-hover transition-shadow">
+  90→              <div className="flex items-center gap-4 mb-6">
+  91→                <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+  92→                  <item.icon className="w-6 h-6 text-blue-900" />
+  93→                </div>
+  94→                <h3 className="text-lg font-semibold text-slate-900">{item.name}</h3>
+  95→              </div>
+  96→              <div className="space-y-2">
+  97→                {item.awards.map((award, idx) => (
+  98→                  <div key={idx} className="flex items-center gap-2 text-slate-600">
+  99→                    <div className="w-1.5 h-1.5 bg-blue-700 rounded-full" />
+ 100→                    <span>{award}</span>
+ 101→                  </div>
+ 102→                ))}
+ 103→              </div>
+ 104→            </div>
+ 105→          ))}
+ 106→        </div>
+ 107→
+ 108→        <div className="mt-16 bg-white rounded-xl overflow-hidden card-shadow">
+ 109→          <div className="grid lg:grid-cols-2 gap-0">
+ 110→            <div className="p-10 flex flex-col justify-center">
+ 111→              <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-700 rounded-full text-sm font-medium w-fit mb-6">
+ 112→                <Trophy className="w-4 h-4" />
+ 113→                荣誉时刻
+ 114→              </div>
+ 115→              <h3 className="text-3xl font-bold text-slate-900 mb-4">第九届飞翔奖"最佳团队奖"</h3>
+ 116→              <p className="text-slate-600 text-lg leading-relaxed mb-6">
+ 117→                以持续的凝聚力与战斗力赢得肯定，团队成员在颁奖典礼上合影留念。
+ 118→              </p>
+ 119→              <div className="flex items-center gap-4 text-sm text-slate-500">
+ 120→                <span>• 团队荣誉</span>
+ 121→                <span>• 2024年度</span>
+ 122→              </div>
+ 123→            </div>
+ 124→            <div className="relative">
+ 125→              <img
+ 126→                src="https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-04-24/1777003008119-f0961b652a2039805208bbbc4e75aa64.jpg?auth_key=0de4ff3bfaa972c24bdf6e292a3efc5462f0b370b86d8e536abfaf20b37925ef"
+ 127→                alt="第九届飞翔奖最佳团队奖颁奖现场"
+ 128→                className="w-full h-full object-cover min-h-[300px]"
+ 129→              />
+ 130→              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+ 131→            </div>
+ 132→          </div>
+ 133→        </div>
+ 134→      </div>
+ 135→    </div>
+ 136→  );
+ 137→}

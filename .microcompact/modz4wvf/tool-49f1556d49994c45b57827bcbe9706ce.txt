@@ -1,0 +1,15 @@
+The file /home/project/src/pages/Home.tsx has been updated. Made 1 replacement.
+
+Here's the result of running `cat -n` on a snippet of the edited file:
+  50→          <div className="mt-14 flex gap-4 justify-center">
+  51→            <a href="#/about" className="inline-flex items-center gap-2 px-8 py-3 bg-white text-[#1e3a8a] font-medium rounded-lg hover:bg-blue-50 transition-colors shadow-lg">
+  52→              了解团队 <ArrowRight className="w-4 h-4" />
+  53→            </a>
+  54→            <a href="#/team-history" className="px-8 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white/10 transition-colors">
+  55→              团队历程
+  56→            </a>
+  57→          </div>
+  58→        </div>
+  59→      </section>
+  60→
+  61→      <section className="py-20 bg-white">

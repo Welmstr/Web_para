@@ -1,0 +1,1 @@
+{"exitCode":0,"output":"About.tsx\nContact.tsx\nHome.tsx\nRecruitment.tsx\nResearch.tsx\nTeamHistory.tsx","outputLines":6,"stderr":"","command":"ls /home/project/src/pages/","timedOut":false}

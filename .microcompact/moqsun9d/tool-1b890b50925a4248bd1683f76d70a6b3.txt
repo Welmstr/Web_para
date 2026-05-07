@@ -1,0 +1,70 @@
+The file /home/project/src/pages/About.tsx has been updated. Made 1 replacement.
+
+Here's the result of running `cat -n` on a snippet of the edited file:
+ 335→          </motion.div>
+ 336→        </div>
+ 337→      </section>
+ 338→
+ 339→      {/* Alumni Section */}
+ 340→      <section className="py-20 relative">
+ 341→        <div className="max-w-5xl mx-auto px-6">
+ 342→          <div className="mb-12">
+ 343→            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">往届优秀队员</h2>
+ 344→            <p className="mt-2 text-white/40 text-sm">从这里出发，走向更广阔的舞台</p>
+ 345→          </div>
+ 346→
+ 347→          <div className="space-y-8">
+ 348→            {alumniData.map((group) => (
+ 349→              <div key={group.year} className="relative">
+ 350→                <div className="flex items-center gap-3 mb-4">
+ 351→                  <h3 className="text-lg font-semibold text-white/80">{group.year}</h3>
+ 352→                  <div className="flex-1 h-px bg-white/[0.08]" />
+ 353→                </div>
+ 354→
+ 355→                <div className={`grid gap-3 ${group.members.length === 1 ? 'grid-cols-1 max-w-md' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
+ 356→                  {group.members.map((member) => {
+ 357→                    const TypeIcon = getTypeIcon(member.type);
+ 358→                    return (
+ 359→                      <div
+ 360→                        key={member.name}
+ 361→                        className="bg-white/[0.02] border border-white/[0.06] rounded-lg p-4 hover:bg-white/[0.04] hover:border-white/[0.1] transition-colors"
+ 362→                      >
+ 363→                        <div className="flex items-center gap-3">
+ 364→                          <div className="w-10 h-10 rounded-lg bg-[#1e3a8a]/50 flex items-center justify-center flex-shrink-0">
+ 365→                            <span className="text-base font-semibold text-white/80">{member.name[0]}</span>
+ 366→                          </div>
+ 367→                          <div className="flex-1 min-w-0">
+ 368→                            <div className="flex items-center gap-2">
+ 369→                              <span className="text-sm font-medium text-white">{member.name}</span>
+ 370→                              <span className={`px-1.5 py-0.5 rounded text-xs ${getTypeBg(member.type)}`}>
+ 371→                                {member.type}
+ 372→                              </span>
+ 373→                            </div>
+ 374→                            <div className="flex items-center gap-1.5 mt-1 text-xs text-white/50">
+ 375→                              <MapPin className="w-3 h-3" />
+ 376→                              <span>{member.destination}</span>
+ 377→                              {member.degree && <span className="text-white/30">· {member.degree}</span>}
+ 378→                            </div>
+ 379→                          </div>
+ 380→                        </div>
+ 381→                        {member.note && (
+ 382→                          <p className="text-xs text-[#a78bfa]/60 mt-2 pl-[52px]">
+ 383→                            {member.note}
+ 384→                          </p>
+ 385→                        )}
+ 386→                      </div>
+ 387→                    );
+ 388→                  })}
+ 389→                </div>
+ 390→              </div>
+ 391→            ))}
+ 392→          </div>
+ 393→
+ 394→          <div className="mt-12 text-center">
+ 395→            <span className="text-xs text-white/30">更多优秀队员持续更新中...</span>
+ 396→          </div>
+ 397→        </div>
+ 398→      </section>
+ 399→    </div>
+ 400→  );
+ 401→}

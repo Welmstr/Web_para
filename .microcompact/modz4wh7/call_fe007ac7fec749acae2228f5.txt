@@ -1,0 +1,13 @@
+The file /home/project/src/pages/Home.tsx has been updated. Made 1 replacement.
+
+Here's the result of running `cat -n` on a snippet of the edited file:
+  25→        {/* 队徽主体图形背景 */}
+  26→        <div
+  27→          className="absolute inset-0 pointer-events-none"
+  28→          style={{
+  29→            backgroundImage: `url(${new URL('../../assets/oAz.svg', import.meta.url).href})`,
+  30→            backgroundSize: 'cover',
+  31→            backgroundPosition: 'center center',
+  32→            backgroundRepeat: 'no-repeat',
+  33→            opacity: 0.35,
+  34→          }}
