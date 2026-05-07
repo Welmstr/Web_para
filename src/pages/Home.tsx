@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Cpu, Trophy, ArrowRight, ChevronRight, MapPin, Mail, Calendar, Zap, Brain, Server } from 'lucide-react';
+import MiMoHero from '../components/MiMoHero';
 
 const stats = [
   { label: '成立年份', value: 2019, suffix: '' },
@@ -99,105 +100,71 @@ export default function Home() {
   return (
     <div className="min-h-screen relative overflow-hidden">
       <section className="relative min-h-screen flex items-center">
-        <div className="absolute inset-0 hero-pattern" />
-        <div className="absolute inset-0 hero-grid opacity-60" />
-        
-        <motion.div
-          className="absolute top-[15%] right-[10%] w-[500px] h-[500px] rounded-full opacity-40"
-          style={{
-            background: 'radial-gradient(circle, rgba(52, 152, 219, 0.15) 0%, transparent 70%)',
-            filter: 'blur(60px)'
-          }}
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        
-        <motion.div
-          className="absolute bottom-[20%] left-[5%] w-[400px] h-[400px] rounded-full opacity-30"
-          style={{
-            background: 'radial-gradient(circle, rgba(26, 38, 57, 0.1) 0%, transparent 70%)',
-            filter: 'blur(50px)'
-          }}
-          animate={{
-            scale: [1, 1.15, 1],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
+        <MiMoHero />
 
-        <div className="relative max-w-6xl mx-auto px-6 py-32 w-full z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-            className="max-w-3xl"
-          >
-            <motion.div 
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur-sm border border-[#1A2639]/10 rounded-full mb-8"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            >
-              <div className="w-1.5 h-1.5 bg-[#3498DB] rounded-full animate-pulse" />
-              <span className="text-xs text-[#4A5568] font-medium">西南石油大学 · 计算机与软件学院</span>
-            </motion.div>
-
-            <motion.h1 
-              className="text-display-lg md:text-display-xl tracking-tight"
-              initial={{ opacity: 0, y: 30 }}
+        {/* Overlay content — positioned below the MiMoHero title */}
+        <div className="absolute bottom-[18%] left-0 right-0 pointer-events-none z-20">
+          <div className="max-w-6xl mx-auto px-6 w-full">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+              transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+              className="max-w-3xl"
             >
-              <span className="text-[#1A2639]">超算与并行计算</span>
-              <br />
-              <span className="text-gradient-accent">团队</span>
-            </motion.h1>
-
-            <motion.p 
-              className="mt-6 text-body-lg text-[#4A5568] max-w-xl leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-            >
-              突破算力边界，深耕底层架构。面向国家算力基础设施关键需求，推动国产算力生态建设。
-            </motion.p>
-
-            <motion.div 
-              className="mt-10 flex flex-wrap gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-            >
-              <motion.a 
-                href="#/contact" 
-                className="btn-primary group inline-flex items-center gap-2"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              <motion.div
+                className="pointer-events-auto inline-flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur-sm border border-[#1A2639]/10 rounded-full mb-6"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
               >
-                加入团队
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </motion.a>
-              <motion.a 
-                href="#/research" 
-                className="btn-secondary inline-flex items-center gap-2"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                <div className="w-1.5 h-1.5 bg-[#3498DB] rounded-full animate-pulse" />
+                <span className="text-xs text-[#4A5568] font-medium">西南石油大学 · 计算机与软件学院</span>
+              </motion.div>
+
+              <motion.p
+                className="text-body-lg text-[#4A5568] max-w-xl leading-relaxed pointer-events-auto"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
               >
-                研究方向
-              </motion.a>
+                突破算力边界，深耕底层架构。面向国家算力基础设施关键需求，推动国产算力生态建设。
+              </motion.p>
+
+              <motion.div
+                className="mt-8 flex flex-wrap gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+              >
+                <motion.a
+                  href="#/contact"
+                  className="pointer-events-auto btn-primary group inline-flex items-center gap-2"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  加入团队
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </motion.a>
+                <motion.a
+                  href="#/research"
+                  className="pointer-events-auto btn-secondary inline-flex items-center gap-2"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  研究方向
+                </motion.a>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-          <motion.div 
-            className="w-6 h-10 border border-[#1A2639]/20 rounded-full flex justify-center pt-2 bg-white/50 backdrop-blur-sm"
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
+          <motion.div
+            className="w-6 h-10 border border-[#1A2639]/20 rounded-full flex justify-center pt-2 bg-white/50 backdrop-blur-sm pointer-events-auto"
             animate={{ y: [0, 6, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <motion.div 
+            <motion.div
               className="w-1 h-2 bg-[#3498DB] rounded-full"
               animate={{ opacity: [0.3, 0.8, 0.3], y: [0, 4, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
