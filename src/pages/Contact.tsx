@@ -57,15 +57,12 @@ export default function Contact() {
         <div className="absolute inset-0 hero-pattern" />
         <div className="absolute inset-0 grid-pattern opacity-30" />
         
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <div className="w-[300px] h-[300px] rounded-full border border-[#3498DB]/10" />
-          <div className="absolute inset-0 w-[300px] h-[300px] rounded-full border border-[#3498DB]/5 animate-ping" style={{ animationDuration: '3s' }} />
-        </motion.div>
+        <div className="ripple-container">
+          <div className="ripple-ring" />
+          <div className="ripple-ring" />
+          <div className="ripple-ring" />
+          <div className="ripple-ring" />
+        </div>
         
         <div className="relative max-w-6xl mx-auto px-6 z-10">
           <motion.div

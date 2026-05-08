@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Cpu, Target, Rocket, Lightbulb, Award, Users, ArrowRight, CheckCircle, GraduationCap, Briefcase, MapPin } from 'lucide-react';
+import ParticleNetwork from '../components/ParticleNetwork';
 
 const features = [
   { icon: Cpu, title: '国产CPU适配', desc: '深耕国产处理器优化与适配，推动自主可控生态建设' },
@@ -134,6 +135,7 @@ export default function About() {
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 hero-pattern" />
         <div className="absolute inset-0 grid-pattern opacity-30" />
+        <ParticleNetwork />
         
         <motion.div
           className="absolute top-[20%] right-[15%] w-[400px] h-[400px] rounded-full opacity-30"

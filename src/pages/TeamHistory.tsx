@@ -51,8 +51,8 @@ const certificatesData = [
   { id: 23, category: 'TECORIGIN', year: '2024', title: 'Tecorigin 优秀奖 (2)', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-05-03/1777809204539-teco2024_01优秀奖.png?auth_key=1b4387b2c9475eb923532dbbddaf0faab55254469b49d179ebb4a70b3e968a77' },
   { id: 24, category: 'TECORIGIN', year: '2024', title: 'Tecorigin 优秀奖 (3)', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-05-03/1777809211753-teco2024_06优秀奖.png?auth_key=4a360b72d5aa9321607ae91107fe8e3ba94dfe5fdd716c9b273e18e83e894876' },
   { id: 25, category: 'TECORIGIN', year: '2024', title: 'Tecorigin 优秀奖 (4)', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-05-03/1777809218462-teco2024_04优秀奖.png?auth_key=edbff4ac0556451414e29adbf301a557bbe9cc277b878660d85f90d0b1ac4ab4' },
-  { id: 26, category: 'IPCC', year: '2020', title: 'IPCC2020 优胜奖', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-05-03/1777811181330-IPCC2020-优胜奖__2_.jpg?auth_key=2b83e5b929ad3478b3b56d5ee1b41e4c64c15159f983639930f778db363dd785', rotate: -90 },
-  { id: 27, category: 'FLYING_AWARD', year: '2025', title: '第九届飞翔奖', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-04-26/1777208155926-第九届飞翔奖.jpg?auth_key=21d38a7ec3a582e96ee2efc5bf1aa6de82b5c9f62457a861a14ba36217d0ba7b', rotate: 90 },
+  { id: 26, category: 'IPCC', year: '2020', title: 'IPCC2020 优胜奖', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-05-03/1777811181330-IPCC2020-优胜奖__2_.jpg?auth_key=2b83e5b929ad3478b3b56d5ee1b41e4c64c15159f983639930f778db363dd785', rotate: 90 },
+  { id: 27, category: 'FLYING_AWARD', year: '2025', title: '第九届飞翔奖', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-04-26/1777208155926-第九届飞翔奖.jpg?auth_key=21d38a7ec3a582e96ee2efc5bf1aa6de82b5c9f62457a861a14ba36217d0ba7b', rotate: -90 },
   { id: 28, category: 'FLYING_AWARD', year: '2022', title: '第七届飞翔奖提名奖', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-04-26/1777208155929-飞翔奖__2__1_.jpg?auth_key=3ebe2c7c7978cfd3f4da889916ba8699b0a25ac6bce2acf953a9a9bd63a8321b' },
   { id: 29, category: 'COMPUTER_DESIGN', year: '2024', title: '计算机设计大赛国一', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-04-26/1777208172270-计算机设计大赛国一_1_.jpg?auth_key=05016ed35582c1da6fcb671759652696847a04d3b41d6141566619bfec66ee43' },
   { id: 30, category: 'PIONEER_CUP', year: '2025', title: '先导杯2025 优胜奖 (1)', image: 'https://conversation.cdn.meoo.host/conversations/305887077998919680/image/2026-04-26/1777208176525-先导杯2025_优胜奖1_1_.png?auth_key=d092d60ffb629f48acca2a01ddbd2c2574c9050ace722ba75b5a57d2db9b8e7f' },
@@ -122,10 +122,14 @@ export default function TeamHistory() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative overflow-hidden">
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 hero-pattern" />
         <div className="absolute inset-0 grid-pattern opacity-30" />
+
+        <div className="stars-container">
+          {Array.from({ length: 20 }, (_, i) => <div key={i} className="star" />)}
+        </div>
 
         <div className="relative max-w-6xl mx-auto px-6">
           <motion.div

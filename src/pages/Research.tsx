@@ -50,6 +50,11 @@ export default function Research() {
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 hero-pattern" />
         <div className="absolute inset-0 grid-pattern opacity-30" />
+
+        <div className="hex-bg" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          {Array.from({ length: 8 }, (_, i) => <div key={i} className="hex-data-particle" />)}
+        </div>
         
         <motion.div
           className="absolute top-[15%] right-[10%] w-[400px] h-[400px] rounded-full opacity-30"
