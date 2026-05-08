@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 
 const TRAIL_COUNT = 6;
-const CIRCLE_RADIUS = 200;
+const DESKTOP_RADIUS = 200;
+const MOBILE_RADIUS_RATIO = 0.3;
 const POLYGON_SEGMENTS = 30;
 
 interface TrailPoint {
@@ -27,7 +28,7 @@ function createTrailSystem(): TrailSystem {
   };
 }
 
-function buildClipPath(system: TrailSystem): string {
+function buildClipPath(system: TrailSystem, radius: number): string {
   const head = system.trailPoints[0];
   const tail = system.trailPoints[5];
 
@@ -36,7 +37,7 @@ function buildClipPath(system: TrailSystem): string {
   const distance = Math.sqrt(diffX * diffX + diffY * diffY);
 
   if (distance < 10) {
-    return `circle(${CIRCLE_RADIUS}px at ${head.x}px ${head.y}px)`;
+    return `circle(${radius}px at ${head.x}px ${head.y}px)`;
   }
 
   const angle = Math.atan2(diffY, diffX);
@@ -44,15 +45,15 @@ function buildClipPath(system: TrailSystem): string {
 
   for (let i = 0; i <= POLYGON_SEGMENTS; i++) {
     const theta = angle - Math.PI / 2 + (Math.PI * i) / POLYGON_SEGMENTS;
-    const x = head.x + CIRCLE_RADIUS * Math.cos(theta);
-    const y = head.y + CIRCLE_RADIUS * Math.sin(theta);
+    const x = head.x + radius * Math.cos(theta);
+    const y = head.y + radius * Math.sin(theta);
     points.push(`${x}px ${y}px`);
   }
 
   for (let i = 0; i <= POLYGON_SEGMENTS; i++) {
     const theta = angle + Math.PI / 2 + (Math.PI * i) / POLYGON_SEGMENTS;
-    const x = tail.x + CIRCLE_RADIUS * Math.cos(theta);
-    const y = tail.y + CIRCLE_RADIUS * Math.sin(theta);
+    const x = tail.x + radius * Math.cos(theta);
+    const y = tail.y + radius * Math.sin(theta);
     points.push(`${x}px ${y}px`);
   }
 
@@ -86,16 +87,46 @@ export default function MiMoHero() {
   const labelRef = useRef<HTMLSpanElement>(null);
   const trailRef = useRef<TrailSystem>(createTrailSystem());
   const visibleRef = useRef(false);
+  const radiusRef = useRef(DESKTOP_RADIUS);
   const [flipped, setFlipped] = useState(false);
+
+  // Responsive radius — smaller on mobile
+  useEffect(() => {
+    const updateRadius = () => {
+      if (containerRef.current) {
+        const w = containerRef.current.offsetWidth;
+        radiusRef.current = w <= 768 ? Math.max(80, w * MOBILE_RADIUS_RATIO) : DESKTOP_RADIUS;
+      }
+    };
+    updateRadius();
+    window.addEventListener('resize', updateRadius);
+    return () => window.removeEventListener('resize', updateRadius);
+  }, []);
+
+  const hideCircle = useCallback(() => {
+    visibleRef.current = false;
+    const sys = trailRef.current;
+    sys.isInside = false;
+    if (sys.animationId) {
+      cancelAnimationFrame(sys.animationId);
+      sys.animationId = 0;
+    }
+    if (z2Ref.current) {
+      z2Ref.current.style.clipPath = 'circle(0px at -300px -300px)';
+    }
+    if (labelRef.current) {
+      labelRef.current.style.color = '';
+    }
+  }, []);
 
   const animate = useCallback(() => {
     if (!visibleRef.current || flipped) return;
     const sys = trailRef.current;
+    const radius = radiusRef.current;
     updateTrailPoints(sys);
     if (z2Ref.current) {
-      z2Ref.current.style.clipPath = buildClipPath(sys);
+      z2Ref.current.style.clipPath = buildClipPath(sys, radius);
     }
-    // Toggle label color when under the black mask
     if (labelRef.current) {
       const head = sys.trailPoints[0];
       const labelRect = labelRef.current.getBoundingClientRect();
@@ -105,19 +136,15 @@ export default function MiMoHero() {
         const ly = labelRect.top + labelRect.height / 2 - containerRect.top;
         const dx = lx - head.x;
         const dy = ly - head.y;
-        const inside = Math.sqrt(dx * dx + dy * dy) < CIRCLE_RADIUS;
+        const inside = Math.sqrt(dx * dx + dy * dy) < radius;
         labelRef.current.style.color = inside ? '#ffffff' : '';
       }
     }
     sys.animationId = requestAnimationFrame(animate);
-  }, [flipped]);
+  }, [flipped, hideCircle]);
 
-  const onMouseEnter = useCallback((e: React.MouseEvent) => {
+  const startCircle = useCallback((x: number, y: number) => {
     if (flipped) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
     visibleRef.current = true;
     const sys = trailRef.current;
     sys.targetX = x;
@@ -131,29 +158,18 @@ export default function MiMoHero() {
     }
   }, [animate, flipped]);
 
-  const onMouseLeave = useCallback((e: React.MouseEvent) => {
+  const moveCircle = useCallback((x: number, y: number) => {
+    if (!visibleRef.current || flipped) return;
+    trailRef.current.targetX = x;
+    trailRef.current.targetY = y;
+  }, [flipped]);
+
+  // ===== Mouse handlers (desktop) =====
+  const onMouseEnter = useCallback((e: React.MouseEvent) => {
+    if (flipped) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    visibleRef.current = false;
-    const sys = trailRef.current;
-    sys.isInside = false;
-    const { tx, ty } = calcBounceTarget(x, y, rect.width, rect.height);
-    sys.targetX = tx;
-    sys.targetY = ty;
-
-    if (sys.animationId) {
-      cancelAnimationFrame(sys.animationId);
-      sys.animationId = 0;
-    }
-    if (z2Ref.current) {
-      z2Ref.current.style.clipPath = 'circle(0px at -300px -300px)';
-    }
-    if (labelRef.current) {
-      labelRef.current.style.color = '';
-    }
-  }, []);
+    startCircle(e.clientX - rect.left, e.clientY - rect.top);
+  }, [startCircle, flipped]);
 
   const onMouseMove = useCallback((e: React.MouseEvent) => {
     if (!visibleRef.current || flipped) return;
@@ -162,25 +178,45 @@ export default function MiMoHero() {
     trailRef.current.targetY = e.clientY - rect.top;
   }, [flipped]);
 
+  const onMouseLeave = useCallback((e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const { tx, ty } = calcBounceTarget(x, y, rect.width, rect.height);
+    trailRef.current.targetX = tx;
+    trailRef.current.targetY = ty;
+    hideCircle();
+  }, [hideCircle]);
+
+  // ===== Touch handlers (mobile) =====
+  const isFlipTrigger = (el: EventTarget): boolean => {
+    return !!(el as HTMLElement).closest?.('.mimo-flip-label, .mimo-crack-zone');
+  };
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    if (isFlipTrigger(e.target)) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const touch = e.touches[0];
+    startCircle(touch.clientX - rect.left, touch.clientY - rect.top);
+  }, [startCircle]);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!visibleRef.current || flipped) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const touch = e.touches[0];
+    moveCircle(touch.clientX - rect.left, touch.clientY - rect.top);
+  }, [moveCircle, flipped]);
+
+  const onTouchEnd = useCallback(() => {
+    hideCircle();
+  }, [hideCircle]);
+
   const handleFlip = useCallback(() => {
     setFlipped((prev) => {
-      if (!prev) {
-        // Flipping to back: kill mouse interaction
-        visibleRef.current = false;
-        if (trailRef.current.animationId) {
-          cancelAnimationFrame(trailRef.current.animationId);
-          trailRef.current.animationId = 0;
-        }
-        if (z2Ref.current) {
-          z2Ref.current.style.clipPath = 'circle(0px at -300px -300px)';
-        }
-        if (labelRef.current) {
-          labelRef.current.style.color = '';
-        }
-      }
+      if (!prev) hideCircle();
       return !prev;
     });
-  }, []);
+  }, [hideCircle]);
 
   useEffect(() => {
     return () => {
@@ -197,6 +233,9 @@ export default function MiMoHero() {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onMouseMove={onMouseMove}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
       <div className="mimo-flip-container">
         <div
