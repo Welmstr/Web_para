@@ -33,7 +33,7 @@ function buildClipPath(system: TrailSystem, radius: number): string {
   const tail = system.trailPoints[5];
 
   // Exaggerate head-tail spread so deformation is visible at moderate speed
-  const stretchFactor = 1.4;
+  const stretchFactor = 2.2;
   const midX = (head.x + tail.x) / 2;
   const midY = (head.y + tail.y) / 2;
   const exHeadX = midX + (head.x - midX) * stretchFactor;
@@ -45,7 +45,7 @@ function buildClipPath(system: TrailSystem, radius: number): string {
   const exDiffY = exHeadY - exTailY;
   const exDistance = Math.sqrt(exDiffX * exDiffX + exDiffY * exDiffY);
 
-  if (exDistance < 8) {
+  if (exDistance < 5) {
     return `circle(${radius}px at ${head.x}px ${head.y}px)`;
   }
 
@@ -73,7 +73,7 @@ function updateTrailPoints(system: TrailSystem): void {
   for (let t = 0; t < TRAIL_COUNT; t++) {
     const prevX = t === 0 ? system.targetX : system.trailPoints[t - 1].x;
     const prevY = t === 0 ? system.targetY : system.trailPoints[t - 1].y;
-    const damping = 0.78 - 0.07 * t;
+    const damping = 0.82 - 0.10 * t;
 
     system.trailPoints[t].x += (prevX - system.trailPoints[t].x) * damping;
     system.trailPoints[t].y += (prevY - system.trailPoints[t].y) * damping;
