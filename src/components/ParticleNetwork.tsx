@@ -69,7 +69,7 @@ export default function ParticleNetwork() {
         if (p.y < -20) p.y = h + 20;
         if (p.y > h + 20) p.y = -20;
 
-        const alpha = 0.15 + Math.sin(p.pulse) * 0.08;
+        const alpha = 0.35 + Math.sin(p.pulse) * 0.18;
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx!.fillStyle = `rgba(52,152,219,${alpha})`;
@@ -82,11 +82,11 @@ export default function ParticleNetwork() {
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < CONNECT_DIST) {
-            const alpha = (1 - dist / CONNECT_DIST) * 0.06;
+            const alpha = (1 - dist / CONNECT_DIST) * 0.14;
             ctx!.beginPath();
             ctx!.moveTo(particles[i].x, particles[i].y);
             ctx!.lineTo(particles[j].x, particles[j].y);
-            ctx!.strokeStyle = `rgba(26,38,57,${alpha})`;
+            ctx!.strokeStyle = `rgba(52,152,219,${alpha})`;
             ctx!.lineWidth = 0.5;
             ctx!.stroke();
           }
@@ -110,7 +110,6 @@ export default function ParticleNetwork() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 z-0 pointer-events-none"
-      style={{ opacity: 0.7 }}
     />
   );
 }

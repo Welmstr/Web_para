@@ -852,26 +852,26 @@ body {
   animation: starRise linear infinite;
 }
 
-.star:nth-child(1) { left: 8%; width: 3px; height: 3px; background: rgba(245,158,11,0.5); animation-duration: 18s; animation-delay: 0s; }
-.star:nth-child(2) { left: 14%; width: 2px; height: 2px; background: rgba(52,152,219,0.4); animation-duration: 22s; animation-delay: 3s; }
-.star:nth-child(3) { left: 22%; width: 4px; height: 4px; background: rgba(245,158,11,0.35); animation-duration: 20s; animation-delay: 6s; }
-.star:nth-child(4) { left: 28%; width: 2px; height: 2px; background: rgba(52,152,219,0.5); animation-duration: 25s; animation-delay: 1s; }
-.star:nth-child(5) { left: 35%; width: 3px; height: 3px; background: rgba(245,158,11,0.4); animation-duration: 16s; animation-delay: 9s; }
-.star:nth-child(6) { left: 42%; width: 2px; height: 2px; background: rgba(52,152,219,0.35); animation-duration: 23s; animation-delay: 4s; }
-.star:nth-child(7) { left: 50%; width: 4px; height: 4px; background: rgba(245,158,11,0.45); animation-duration: 19s; animation-delay: 7s; }
-.star:nth-child(8) { left: 56%; width: 2px; height: 2px; background: rgba(52,152,219,0.4); animation-duration: 21s; animation-delay: 11s; }
-.star:nth-child(9) { left: 62%; width: 3px; height: 3px; background: rgba(245,158,11,0.3); animation-duration: 24s; animation-delay: 2s; }
-.star:nth-child(10) { left: 68%; width: 2px; height: 2px; background: rgba(52,152,219,0.45); animation-duration: 17s; animation-delay: 8s; }
-.star:nth-child(11) { left: 74%; width: 3px; height: 3px; background: rgba(245,158,11,0.5); animation-duration: 26s; animation-delay: 5s; }
-.star:nth-child(12) { left: 80%; width: 2px; height: 2px; background: rgba(52,152,219,0.35); animation-duration: 20s; animation-delay: 10s; }
-.star:nth-child(13) { left: 86%; width: 4px; height: 4px; background: rgba(245,158,11,0.4); animation-duration: 22s; animation-delay: 12s; }
-.star:nth-child(14) { left: 92%; width: 2px; height: 2px; background: rgba(52,152,219,0.5); animation-duration: 18s; animation-delay: 14s; }
-.star:nth-child(15) { left: 18%; width: 2px; height: 2px; background: rgba(245,158,11,0.35); animation-duration: 15s; animation-delay: 16s; }
-.star:nth-child(16) { left: 44%; width: 3px; height: 3px; background: rgba(52,152,219,0.3); animation-duration: 27s; animation-delay: 3s; }
-.star:nth-child(17) { left: 58%; width: 2px; height: 2px; background: rgba(245,158,11,0.45); animation-duration: 21s; animation-delay: 13s; }
-.star:nth-child(18) { left: 70%; width: 3px; height: 3px; background: rgba(52,152,219,0.4); animation-duration: 19s; animation-delay: 15s; }
-.star:nth-child(19) { left: 32%; width: 2px; height: 2px; background: rgba(245,158,11,0.5); animation-duration: 24s; animation-delay: 17s; }
-.star:nth-child(20) { left: 90%; width: 2px; height: 2px; background: rgba(52,152,219,0.35); animation-duration: 16s; animation-delay: 18s; }
+.star:nth-child(1) { left: 8%; width: 4px; height: 4px; background: rgba(245,158,11,0.7); animation-duration: 18s; animation-delay: 0s; }
+.star:nth-child(2) { left: 14%; width: 3px; height: 3px; background: rgba(52,152,219,0.6); animation-duration: 22s; animation-delay: 3s; }
+.star:nth-child(3) { left: 22%; width: 5px; height: 5px; background: rgba(245,158,11,0.55); animation-duration: 20s; animation-delay: 6s; }
+.star:nth-child(4) { left: 28%; width: 3px; height: 3px; background: rgba(52,152,219,0.7); animation-duration: 25s; animation-delay: 1s; }
+.star:nth-child(5) { left: 35%; width: 4px; height: 4px; background: rgba(245,158,11,0.6); animation-duration: 16s; animation-delay: 9s; }
+.star:nth-child(6) { left: 42%; width: 3px; height: 3px; background: rgba(52,152,219,0.55); animation-duration: 23s; animation-delay: 4s; }
+.star:nth-child(7) { left: 50%; width: 5px; height: 5px; background: rgba(245,158,11,0.65); animation-duration: 19s; animation-delay: 7s; }
+.star:nth-child(8) { left: 56%; width: 3px; height: 3px; background: rgba(52,152,219,0.6); animation-duration: 21s; animation-delay: 11s; }
+.star:nth-child(9) { left: 62%; width: 4px; height: 4px; background: rgba(245,158,11,0.5); animation-duration: 24s; animation-delay: 2s; }
+.star:nth-child(10) { left: 68%; width: 3px; height: 3px; background: rgba(52,152,219,0.65); animation-duration: 17s; animation-delay: 8s; }
+.star:nth-child(11) { left: 74%; width: 4px; height: 4px; background: rgba(245,158,11,0.7); animation-duration: 26s; animation-delay: 5s; }
+.star:nth-child(12) { left: 80%; width: 3px; height: 3px; background: rgba(52,152,219,0.55); animation-duration: 20s; animation-delay: 10s; }
+.star:nth-child(13) { left: 86%; width: 5px; height: 5px; background: rgba(245,158,11,0.6); animation-duration: 22s; animation-delay: 12s; }
+.star:nth-child(14) { left: 92%; width: 3px; height: 3px; background: rgba(52,152,219,0.7); animation-duration: 18s; animation-delay: 14s; }
+.star:nth-child(15) { left: 18%; width: 3px; height: 3px; background: rgba(245,158,11,0.55); animation-duration: 15s; animation-delay: 16s; }
+.star:nth-child(16) { left: 44%; width: 4px; height: 4px; background: rgba(52,152,219,0.5); animation-duration: 27s; animation-delay: 3s; }
+.star:nth-child(17) { left: 58%; width: 3px; height: 3px; background: rgba(245,158,11,0.65); animation-duration: 21s; animation-delay: 13s; }
+.star:nth-child(18) { left: 70%; width: 4px; height: 4px; background: rgba(52,152,219,0.6); animation-duration: 19s; animation-delay: 15s; }
+.star:nth-child(19) { left: 32%; width: 3px; height: 3px; background: rgba(245,158,11,0.7); animation-duration: 24s; animation-delay: 17s; }
+.star:nth-child(20) { left: 90%; width: 3px; height: 3px; background: rgba(52,152,219,0.55); animation-duration: 16s; animation-delay: 18s; }
 
 @keyframes starRise {
   0%   { transform: translateY(0) scale(1); opacity: 0; }
@@ -886,21 +886,21 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.35;
+  opacity: 0.6;
   background-image:
-    repeating-linear-gradient(60deg, rgba(26,38,57,0.03) 0px, transparent 1px, transparent 32px, rgba(26,38,57,0.03) 33px),
-    repeating-linear-gradient(-60deg, rgba(26,38,57,0.03) 0px, transparent 1px, transparent 32px, rgba(26,38,57,0.03) 33px),
-    repeating-linear-gradient(0deg, rgba(26,38,57,0.03) 0px, transparent 1px, transparent 32px, rgba(26,38,57,0.03) 33px);
+    repeating-linear-gradient(60deg, rgba(26,38,57,0.06) 0px, transparent 1px, transparent 32px, rgba(26,38,57,0.06) 33px),
+    repeating-linear-gradient(-60deg, rgba(26,38,57,0.06) 0px, transparent 1px, transparent 32px, rgba(26,38,57,0.06) 33px),
+    repeating-linear-gradient(0deg, rgba(26,38,57,0.06) 0px, transparent 1px, transparent 32px, rgba(26,38,57,0.06) 33px);
   background-size: 56px 97px;
 }
 
 .hex-data-particle {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  background: rgba(52,152,219,0.5);
-  box-shadow: 0 0 6px rgba(52,152,219,0.25);
+  background: rgba(52,152,219,0.7);
+  box-shadow: 0 0 8px rgba(52,152,219,0.4);
   pointer-events: none;
   animation: hexFlow 8s linear infinite;
 }
@@ -934,16 +934,16 @@ body {
 .ripple-ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(52,152,219,0.2);
+  border: 1.5px solid rgba(52,152,219,0.35);
   animation: rippleExpand 5s ease-out infinite;
 }
 
-.ripple-ring:nth-child(1) { width: 20px; height: 20px; animation-delay: 0s; }
-.ripple-ring:nth-child(2) { width: 20px; height: 20px; animation-delay: 1.25s; }
-.ripple-ring:nth-child(3) { width: 20px; height: 20px; animation-delay: 2.5s; }
-.ripple-ring:nth-child(4) { width: 20px; height: 20px; animation-delay: 3.75s; }
+.ripple-ring:nth-child(1) { width: 40px; height: 40px; animation-delay: 0s; }
+.ripple-ring:nth-child(2) { width: 40px; height: 40px; animation-delay: 1.25s; }
+.ripple-ring:nth-child(3) { width: 40px; height: 40px; animation-delay: 2.5s; }
+.ripple-ring:nth-child(4) { width: 40px; height: 40px; animation-delay: 3.75s; }
 
 @keyframes rippleExpand {
-  0%   { width: 20px; height: 20px; margin-left: -10px; margin-top: -10px; opacity: 0.6; border-width: 1px; }
-  100% { width: 500px; height: 500px; margin-left: -250px; margin-top: -250px; opacity: 0; border-width: 0.2px; }
+  0%   { width: 40px; height: 40px; margin-left: -20px; margin-top: -20px; opacity: 0.7; border-width: 1.5px; }
+  100% { width: 500px; height: 500px; margin-left: -250px; margin-top: -250px; opacity: 0; border-width: 0.3px; }
 }
