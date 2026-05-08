@@ -89,8 +89,14 @@ export default function MiMoHero() {
   const visibleRef = useRef(false);
   const radiusRef = useRef(DESKTOP_RADIUS);
   const [flipped, setFlipped] = useState(false);
+  const flippedRef = useRef(false);
 
-  // Responsive radius — smaller on mobile
+  // Keep flippedRef in sync so native event handlers can read it
+  useEffect(() => {
+    flippedRef.current = flipped;
+  }, [flipped]);
+
+  // Responsive radius
   useEffect(() => {
     const updateRadius = () => {
       if (containerRef.current) {
@@ -103,24 +109,9 @@ export default function MiMoHero() {
     return () => window.removeEventListener('resize', updateRadius);
   }, []);
 
-  const hideCircle = useCallback(() => {
-    visibleRef.current = false;
-    const sys = trailRef.current;
-    sys.isInside = false;
-    if (sys.animationId) {
-      cancelAnimationFrame(sys.animationId);
-      sys.animationId = 0;
-    }
-    if (z2Ref.current) {
-      z2Ref.current.style.clipPath = 'circle(0px at -300px -300px)';
-    }
-    if (labelRef.current) {
-      labelRef.current.style.color = '';
-    }
-  }, []);
-
-  const animate = useCallback(() => {
-    if (!visibleRef.current || flipped) return;
+  // Animation loop — stable, only reads refs
+  const animateLoop = useCallback(() => {
+    if (!visibleRef.current || flippedRef.current) return;
     const sys = trailRef.current;
     const radius = radiusRef.current;
     updateTrailPoints(sys);
@@ -140,11 +131,29 @@ export default function MiMoHero() {
         labelRef.current.style.color = inside ? '#ffffff' : '';
       }
     }
-    sys.animationId = requestAnimationFrame(animate);
-  }, [flipped, hideCircle]);
+    sys.animationId = requestAnimationFrame(animateLoop);
+  }, []);
 
+  // Hide circle — stable, only reads refs
+  const hideCircle = useCallback(() => {
+    visibleRef.current = false;
+    const sys = trailRef.current;
+    sys.isInside = false;
+    if (sys.animationId) {
+      cancelAnimationFrame(sys.animationId);
+      sys.animationId = 0;
+    }
+    if (z2Ref.current) {
+      z2Ref.current.style.clipPath = 'circle(0px at -300px -300px)';
+    }
+    if (labelRef.current) {
+      labelRef.current.style.color = '';
+    }
+  }, []);
+
+  // Start circle at position — stable, only reads refs
   const startCircle = useCallback((x: number, y: number) => {
-    if (flipped) return;
+    if (flippedRef.current) return;
     visibleRef.current = true;
     const sys = trailRef.current;
     sys.targetX = x;
@@ -154,15 +163,16 @@ export default function MiMoHero() {
       sys.trailPoints[i] = { x, y };
     }
     if (!sys.animationId) {
-      sys.animationId = requestAnimationFrame(animate);
+      sys.animationId = requestAnimationFrame(animateLoop);
     }
-  }, [animate, flipped]);
+  }, [animateLoop]);
 
+  // Move circle target — stable, only reads refs
   const moveCircle = useCallback((x: number, y: number) => {
-    if (!visibleRef.current || flipped) return;
+    if (!visibleRef.current || flippedRef.current) return;
     trailRef.current.targetX = x;
     trailRef.current.targetY = y;
-  }, [flipped]);
+  }, []);
 
   // ===== Mouse handlers (desktop) =====
   const onMouseEnter = useCallback((e: React.MouseEvent) => {
@@ -188,28 +198,58 @@ export default function MiMoHero() {
     hideCircle();
   }, [hideCircle]);
 
-  // ===== Touch handlers (mobile) =====
-  const isFlipTrigger = (el: EventTarget): boolean => {
-    return !!(el as HTMLElement).closest?.('.mimo-flip-label, .mimo-crack-zone');
-  };
+  // ===== Native touch listeners (mobile) — need passive:false to prevent scroll =====
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-  const onTouchStart = useCallback((e: React.TouchEvent) => {
-    if (isFlipTrigger(e.target)) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const touch = e.touches[0];
-    startCircle(touch.clientX - rect.left, touch.clientY - rect.top);
-  }, [startCircle]);
+    let touchActive = false;
 
-  const onTouchMove = useCallback((e: React.TouchEvent) => {
-    if (!visibleRef.current || flipped) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const touch = e.touches[0];
-    moveCircle(touch.clientX - rect.left, touch.clientY - rect.top);
-  }, [moveCircle, flipped]);
+    const isFlipTrigger = (el: EventTarget | null): boolean =>
+      !!(el as HTMLElement).closest?.('.mimo-flip-label, .mimo-crack-zone');
 
-  const onTouchEnd = useCallback(() => {
-    hideCircle();
-  }, [hideCircle]);
+    const handleTouchStart = (e: TouchEvent) => {
+      if (flippedRef.current) return;
+      if (isFlipTrigger(e.target)) return;
+
+      const rect = container.getBoundingClientRect();
+      const touch = e.touches[0];
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+
+      // Only capture touches in the upper interactive zone (top 70%)
+      // Lower 30% is text + buttons area — let the page scroll normally there
+      if (y > rect.height * 0.7) return;
+
+      e.preventDefault();
+      touchActive = true;
+      startCircle(x, y);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchActive || flippedRef.current) return;
+      e.preventDefault();
+      const rect = container.getBoundingClientRect();
+      const touch = e.touches[0];
+      moveCircle(touch.clientX - rect.left, touch.clientY - rect.top);
+    };
+
+    const handleTouchEnd = () => {
+      if (!touchActive) return;
+      touchActive = false;
+      hideCircle();
+    };
+
+    container.addEventListener('touchstart', handleTouchStart, { passive: false });
+    container.addEventListener('touchmove', handleTouchMove, { passive: false });
+    container.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [startCircle, moveCircle, hideCircle]);
 
   const handleFlip = useCallback(() => {
     setFlipped((prev) => {
@@ -233,9 +273,6 @@ export default function MiMoHero() {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onMouseMove={onMouseMove}
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
     >
       <div className="mimo-flip-container">
         <div
