@@ -32,28 +32,37 @@ function buildClipPath(system: TrailSystem, radius: number): string {
   const head = system.trailPoints[0];
   const tail = system.trailPoints[5];
 
-  const diffX = head.x - tail.x;
-  const diffY = head.y - tail.y;
-  const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+  // Exaggerate head-tail spread so deformation is visible at moderate speed
+  const stretchFactor = 1.4;
+  const midX = (head.x + tail.x) / 2;
+  const midY = (head.y + tail.y) / 2;
+  const exHeadX = midX + (head.x - midX) * stretchFactor;
+  const exHeadY = midY + (head.y - midY) * stretchFactor;
+  const exTailX = midX + (tail.x - midX) * stretchFactor;
+  const exTailY = midY + (tail.y - midY) * stretchFactor;
 
-  if (distance < 10) {
+  const exDiffX = exHeadX - exTailX;
+  const exDiffY = exHeadY - exTailY;
+  const exDistance = Math.sqrt(exDiffX * exDiffX + exDiffY * exDiffY);
+
+  if (exDistance < 8) {
     return `circle(${radius}px at ${head.x}px ${head.y}px)`;
   }
 
-  const angle = Math.atan2(diffY, diffX);
+  const angle = Math.atan2(exDiffY, exDiffX);
   const points: string[] = [];
 
   for (let i = 0; i <= POLYGON_SEGMENTS; i++) {
     const theta = angle - Math.PI / 2 + (Math.PI * i) / POLYGON_SEGMENTS;
-    const x = head.x + radius * Math.cos(theta);
-    const y = head.y + radius * Math.sin(theta);
+    const x = exHeadX + radius * Math.cos(theta);
+    const y = exHeadY + radius * Math.sin(theta);
     points.push(`${x}px ${y}px`);
   }
 
   for (let i = 0; i <= POLYGON_SEGMENTS; i++) {
     const theta = angle + Math.PI / 2 + (Math.PI * i) / POLYGON_SEGMENTS;
-    const x = tail.x + radius * Math.cos(theta);
-    const y = tail.y + radius * Math.sin(theta);
+    const x = exTailX + radius * Math.cos(theta);
+    const y = exTailY + radius * Math.sin(theta);
     points.push(`${x}px ${y}px`);
   }
 
@@ -64,7 +73,7 @@ function updateTrailPoints(system: TrailSystem): void {
   for (let t = 0; t < TRAIL_COUNT; t++) {
     const prevX = t === 0 ? system.targetX : system.trailPoints[t - 1].x;
     const prevY = t === 0 ? system.targetY : system.trailPoints[t - 1].y;
-    const damping = 0.7 - 0.04 * t;
+    const damping = 0.78 - 0.07 * t;
 
     system.trailPoints[t].x += (prevX - system.trailPoints[t].x) * damping;
     system.trailPoints[t].y += (prevY - system.trailPoints[t].y) * damping;
